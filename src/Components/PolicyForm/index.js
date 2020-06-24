@@ -1,8 +1,8 @@
 import React from 'react'
-import {Container, Row, Button, Form} from 'react-bootstrap'
+import {Container, Row, Button, Form, Col} from 'react-bootstrap'
 import {connect} from 'react-redux'
 
-import {createPolicy} from '../../Action'
+import {createPolicy, deletePolicy} from '../../Action'
 
 const PolicyForm = (props) => {
 
@@ -12,13 +12,19 @@ const PolicyForm = (props) => {
     const handlerCreate = () => {
         const policyObj = {
             name: nameRef.current.value,
-            amount: amountRef.current.vale
+            amount: parseInt(amountRef.current.value)
         }
         props.createPolicy(policyObj.name, policyObj.amount)
     }
 
+    const handleDelete = () => {
+        const name = nameRef.current.value
+        props.deletePolicy(name)
+    }
+
     return (
         <Container>
+            <h1>{props.insuranceName}</h1>
             <Row>
                 Formulario de Polizas
             </Row>
@@ -31,16 +37,26 @@ const PolicyForm = (props) => {
                 </Form.Group>
             </Row>
             <Row>
-                <Button onClick={handlerCreate}>
-                    Crear Poliza
-                </Button>
-                <Button>
-                    Borrar Poliza
-                </Button>
+                <Col>
+                    <Button onClick={handlerCreate}>
+                        Crear Poliza
+                    </Button>
+                </Col>
+                <Col>
+                    <Button onClick={handleDelete}>
+                        Borrar Poliza
+                    </Button>
+                </Col>
             </Row>
 
         </Container>
     )
 }
 
-export default connect(null, { createPolicy })(PolicyForm)
+const mapStateToProps = (state) => {
+    return {
+        insuranceName: state.insuranceName
+    }
+}
+
+export default connect(mapStateToProps, { createPolicy, deletePolicy })(PolicyForm)

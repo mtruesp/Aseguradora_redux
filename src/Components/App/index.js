@@ -6,6 +6,8 @@ import Menu from '../Menu'
 import PolicyForm from '../PolicyForm'
 import ClaimForm from '../ClaimForm'
 import NamesList from '../NamesList'
+import TotalAmount from '../TotalAMount'
+import ClaimList from '../ClaimList'
 
 const App = () => {
  
@@ -21,7 +23,15 @@ const App = () => {
                         <Route path="/claim" component={ClaimForm}></Route>
                     </Col>
                     <Col>
-                        <NamesList></NamesList> 
+                        <Row>
+                            <NamesList/>
+                        </Row>
+                        <Row>
+                            <ClaimList/>
+                        </Row>
+                        <Row>
+                            <TotalAmount/>
+                        </Row>
                     </Col>
                 </Row>
             </BrowserRouter>

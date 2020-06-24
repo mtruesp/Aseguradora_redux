@@ -1,12 +1,44 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import {Container, Row, Col, Button} from 'react-bootstrap'
+import {connect} from 'react-redux'
+import {deletePolicy} from '../../Action'
 
-const NamesList = () => {
+const NamesList = (props) => {
+    const { listOfNames } = props
+    
+    const handleDelete = (name) => {
+        props.deletePolicy(name)
+    }
+
     return(
         <Container>
-            List
+            {
+                listOfNames.map((policy) => {
+                    return (
+                        <Row>
+                            <Col>
+                                {policy.name}
+                            </Col>
+                            <Col>
+                                {policy.amount}
+                            </Col>
+                            <Col>
+                                <Button onClick={() => handleDelete(policy.name)}>
+                                    Borrar
+                                </Button>
+                            </Col>
+                        </Row>
+                    )
+                })
+            }
         </Container>
     )
 }
 
-export default NamesList
+const stateAProps = (state) => { //mapStateToProps nombre común para esta función
+    return {
+        listOfNames: state.namesList
+    }
+}
+
+export default connect(stateAProps, {deletePolicy})(NamesList)
